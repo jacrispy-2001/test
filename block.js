@@ -1,74 +1,25 @@
-var http = require('http');
-var url = require('url');
-var fs = require('fs');
-var server = http.createServer(function(request, response) {
-    var path = url.parse(request.url).pathname;
-    switch (path) {
-        case '/':
-            fs.readFile("home.html", function(err, data) {
-                if (err) {
-                    response.writeHead(404);
-                    response.end(err);
-                } else {
-                    response.writeHead(200, { "Content-Type": "text/html" });
-                    response.write(data);
-                    response.end();
+var mongoose = require("mongoose")
+var express = require("express")
+mongoose.connect("mongodb://localhost/serious", { useNewUrlParser: true, useUnifiedTopology: true })
+var app = express()
 
-                }
 
-            });
-            break;
-        case '/contact':
-            fs.readFile("contact.html", function(error, data) {
-                if (error) {
-                    response.writeHead(404);
-                    response.write(error);
-                    response.end();
-                } else {
-                    response.writeHead(200, {
-                        'Content-Type': 'text/html'
-                    });
-                    response.write(data);
-                    response.end();
-                }
-            });
-            break;
-        case '/about':
-            fs.readFile("about.html", function(error, data) {
-                if (error) {
-                    response.writeHead(404);
-                    response.write(error);
-                    response.end();
-                } else {
-                    response.writeHead(200, {
-                        'Content-Type': 'text/html'
-                    });
-                    response.write(data);
-                    response.end();
-                }
-            });
-            break;
-        case '/sex':
-            fs.readFile("sex.html", function(error, data) {
-                if (error) {
-                    response.writeHead(404);
-                    response.write(error);
-                    response.end();
-                } else {
-                    response.writeHead(200, {
-                        'Content-Type': 'text/html'
-                    });
-                    response.write(data);
-                    response.end();
+app.set("view engine", "ejs")
 
-                }
-            });
-            break;
-        default:
-            response.writeHead(404);
-            response.write("opps this doesn't exist - 404");
-            response.end();
-            break;
-    }
-});
-server.listen(3000, console.log("server started"));
+app.set("views", require("path").join(__dirname, "views"))
+
+var con = mongoose.connection
+
+app.use(express.json())
+
+app.use("/jac", require("./routers/jac"))
+app.get("/", (req, res) => {
+    res.render("login")
+})
+app.get("/register", (req, res) => {
+    res.render("register")
+})
+con.on("open", () => {
+    console.log("fired up the database bitch!!!")
+})
+app.listen(3000, () => { console.log("go shivam") })
