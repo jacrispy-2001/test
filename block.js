@@ -2,7 +2,7 @@ var mongoose = require("mongoose")
 var express = require("express")
 mongoose.connect("mongodb://localhost/serious", { useNewUrlParser: true, useUnifiedTopology: true })
 var app = express()
-
+var PORT = 3000 || process.env.PORT;
 
 app.set("view engine", "ejs")
 
@@ -22,4 +22,4 @@ app.get("/register", (req, res) => {
 con.on("open", () => {
     console.log("fired up the database bitch!!!")
 })
-app.listen(3000, () => { console.log("go shivam") })
+app.listen(PORT, () => { console.log("go shivam") })
