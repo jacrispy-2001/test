@@ -81,5 +81,5 @@ input:focus {
 }
 
  :-ms-input-placeholder {
-    color: #ecf0f1;
+    color: cyan;
 }
