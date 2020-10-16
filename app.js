@@ -1,9 +1,9 @@
-var prop = require("./product");
+var product = require("./product");
 
 var mysql = require("mysql");
 
 module.exports = {
     getConnection: () => {
-        return mysql.createConnection(prop);
+        return mysql.createConnection(product);
     }
 }
