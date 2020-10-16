@@ -19,6 +19,9 @@ app.get("/", (req, res) => {
 app.get("/register", (req, res) => {
     res.render("register")
 })
+
+app.get("*",(req,res)=>{
+    res.send("ERROR!!!!!!!!!!!!!!!!!!")})
 con.on("open", () => {
     console.log("fired up the database bitch!!!")
 })
